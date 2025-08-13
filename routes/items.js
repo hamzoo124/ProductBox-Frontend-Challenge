@@ -1,55 +1,36 @@
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
-var logger = require('../lib/logger');
-var log = logger();
+const express = require("express");
+const router = express.Router();
+const _ = require("lodash");
 
-var items = require('../init_data.json').data;
-var curId = _.size(items);
+const items = require("../init_data.json").data;
+let curId = _.size(items);
 
-/* GET items listing. */
-router.get('/', function(req, res) {
-    res.json(_.toArray(items));
+// GET all items
+router.get("/", (req, res) => {
+  res.json(_.toArray(items));
 });
 
-/* Create a new item */
-router.post('/', function(req, res) {
-    var item = req.body;
-    curId += 1;
-    item.id = curId;
-    items[item.id] = item;
-    log.info('Created item', item);
-    res.json(item);
+// POST new item
+router.post("/", (req, res) => {
+  const item = req.body;
+  curId += 1;
+  item.id = curId;
+  items[item.id] = item;
+  res.json(item);
 });
 
-/* Get a specific item by id */
-router.get('/:id', function(req, res, next) {
-    var item = items[req.params.id];
-    if (!item) {
-        return next();
-    }
-    res.json(items[req.params.id]);
+// GET item by id
+router.get("/:id", (req, res) => {
+  const item = items[req.params.id];
+  if (!item) return res.status(404).json({ error: "Item not found" });
+  res.json(item);
 });
 
-/* Delete a item by id */
-router.delete('/:id', function(req, res) {
-    var item = items[req.params.id];
-    delete items[req.params.id];
-    res.status(204);
-    log.info('Deleted item', item);
-    res.json(item);
+// DELETE item
+router.delete("/:id", (req, res) => {
+  const item = items[req.params.id];
+  delete items[item.id];
+  res.status(204).json(item);
 });
-
-/* Update a item by id */
-router.put('/:id', function(req, res, next) {
-    var item = req.body;
-    if (item.id != req.params.id) {
-        return next(new Error('ID paramter does not match body'));
-    }
-    items[item.id] = item;
-    log.info('Updating item', item);
-    res.json(item);
-});
-
 
 module.exports = router;

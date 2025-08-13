@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { CartContext } from "../context/CartContext";
 const Header = () => {
-  const cartCount = 3; // static number of items in cart
+  const { cartItems } = useContext(CartContext);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
@@ -31,7 +31,7 @@ const Header = () => {
 
   {/* Cart Count Badge */}
   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    {cartCount}
+    {cartItems.length}
     <span className="visually-hidden">items in cart</span>
   </span>
 </Link>

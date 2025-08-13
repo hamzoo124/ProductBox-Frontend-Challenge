@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../src/api/base_url";
+import { CartContext } from "../../src/context/CartContext";
 
 
 const Items = () => {
+  const { addToCart } = useContext(CartContext);
   const [items, setItems] = useState([]);
-
   useEffect(() => {
     fetch(`${BASE_URL}/items`)
       .then((res) => res.json())
       .then((data) => setItems(data))
       .catch((err) => console.error(err));
   }, []);
+
+  const AddItem = (item) => {
+    console.log("addtocart", item);
+    addToCart(item)
+    
+    // Logic to add item to cart
+  }
 
   return (
     <div className="container mt-4">
@@ -30,7 +38,7 @@ const Items = () => {
                 {/* <h5 className="card-title">{item.img}</h5> */}
                 <h5 className="card-title">{item.name}</h5>
                 <p className="card-text">${item.price}</p>
-                <button className="btn btn-primary w-100">
+                <button className="btn btn-primary w-100" onClick={() => AddItem(item)}>
                   Add to Cart
                 </button>
               </div>

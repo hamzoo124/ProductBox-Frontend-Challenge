@@ -1,13 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Items from "./pages/Items";
+import AddItem from "./pages/AddItem";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
-    <div className="App">
-      <h1>heloo world</h1>
-     
-    </div>
+    // <CartProvider>
+      <Router>
+        {/* <Header /> */}
+         <Routes>
+          <Route path="/" element={<Header />} />
+          {/* <Route path="/items" element={<Items />} />
+          <Route path="/add-item" element={<AddItem />} />
+          <Route path="/checkout" element={<Checkout />} /> */}
+        </Routes> 
+      </Router>
+    // </CartProvider>
   );
 }
 

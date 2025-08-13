@@ -11,12 +11,10 @@ function App() {
   return (
     // <CartProvider>
       <Router>
-        {/* <Header /> */}
+        <Header />
          <Routes>
-          <Route path="/" element={<Header />} />
-          {/* <Route path="/items" element={<Items />} />
-          <Route path="/add-item" element={<AddItem />} />
-          <Route path="/checkout" element={<Checkout />} /> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/items" element={<Items />} />
         </Routes> 
       </Router>
     // </CartProvider>

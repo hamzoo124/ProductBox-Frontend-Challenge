@@ -29,12 +29,33 @@ export const CartProvider = ({ children }) => {
 
 };
 
+const incrementQuantity = (itemId) => {
+  setCartItems((prevItems) =>
+    prevItems.map((item) =>     
+      item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+    )
+  );
+}
+
+const decrementQuantity = (itemId) => {
+  setCartItems((prevItems) =>
+    prevItems.map((item) => 
+      item.id === itemId && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    )
+  );
+}
+
+
+
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart,incrementQuantity, decrementQuantity }}>
       {children}
     </CartContext.Provider>
   );

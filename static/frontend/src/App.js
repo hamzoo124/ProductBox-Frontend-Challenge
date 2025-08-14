@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartProvider";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Items from "./pages/Items";
+import Card from "./pages/Card";
 import AddItem from "./pages/AddItem";
 import Checkout from "./pages/Checkout";
+import Items from "./pages/Items";
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
         <Header />
          <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/items" element={<Items />} />
+          <Route path="/Card" element={<Card />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/add-item" element={<AddItem />} />
+          <Route path="/items" element={<Items />} />
         </Routes> 
       </Router>
      </CartProvider>

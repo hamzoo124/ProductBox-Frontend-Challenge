@@ -1,10 +1,11 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { BASE_URL } from "../api/base_url";
 
 const Checkout = () => {
   const [cart, setCart] = useState([]);
-    const { removeFromCart } = useContext(CartContext);
+  const { removeFromCart, incrementQuantity, decrementQuantity } =
+    useContext(CartContext);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -22,6 +23,25 @@ const Checkout = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
+  const incrementQty = (itemId) => {
+    incrementQuantity(itemId);
+    setCart((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+  const decrementQty = (itemId) => {
+    decrementQuantity(itemId);
+    setCart((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }  
+          : item
+      )
+    );
+  };
+
   return (
     <div className="container my-5">
       <h2 className="mb-4">Your Shopping Cart</h2>
@@ -33,36 +53,56 @@ const Checkout = () => {
         <div className="row">
           {/* Cart Items */}
           <div className="col-lg-8">
-            <div className="list-group">
+            <div className="list-group mb-3">
+              {/* Header Row */}
+              <div className="list-group-item d-flex justify-content-between align-items-center fw-bold text-uppercase">
+                <div className="d-flex align-items-center ">
+                  <span className="ms-2">Image</span>
+                  <span className="ms-5">Product Name</span>
+                </div>
+                <span className="text-center">Price</span>
+                <span className="text-center">Quantity</span>
+                <span className="text-center">Remove</span>
+              </div>
+
               {cart.map((item) => (
                 <div
                   key={item.id}
                   className="list-group-item d-flex align-items-center justify-content-between"
                 >
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center w-25">
                     <img
-           src={`${BASE_URL}/${item.img.replace(/^.\//, "")}`}
+                      src={`${BASE_URL}/${item.img.replace(/^.\//, "")}`}
                       alt={item.name}
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                        borderRadius: "5px",
-                      }}
+                      className="w-50 h-25"
                     />
-                    <div className="ms-3">
-                      <h6 className="mb-1">{item.name}</h6>
-                      <p className="mb-0 text-muted">
-                        ${item.price} × {item.quantity}
-                      </p>
-                    </div>
+                    <div className="ms-3">{item.name}</div>
                   </div>
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => removeFrom(item.id)}
-                  >
-                    Remove
-                  </button>
+                  <div className="text-center">${item.price}</div>
+                  <div className="text-center">
+                    <button
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={() => decrementQty(item.id)}         
+                    >
+                      -
+                    </button>
+
+                    <span className="mx-2">{item.quantity}</span>
+                    <button
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={() => incrementQty(item.id)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="text-center">
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => removeFrom(item.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

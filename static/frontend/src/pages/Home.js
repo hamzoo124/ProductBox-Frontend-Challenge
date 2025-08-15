@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="container text-center mt-5">
-      <h1 className="mb-4">Welcome to RandoStore</h1>
-      <p className="mb-5">Choose an action below to get started:</p>
+      <h1 className="mb-4 fst-italic text-black-50">Welcome to RandoStore</h1>
+      <p className="mb-5 fst-italic text-black-50">Choose an action below to get started:</p>
 
       <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
         <Link to="/items" className="btn btn-primary btn-lg d-flex align-items-center gap-2">

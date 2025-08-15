@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { BASE_URL } from "../api/base_url";
+import BackToHomeButton from "../components/BackToHomeButton";
 
 const Checkout = () => {
   const [cart, setCart] = useState([]);
@@ -36,7 +37,7 @@ const Checkout = () => {
     setCart((prevItems) =>
       prevItems.map((item) =>
         item.id === itemId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }  
+          ? { ...item, quantity: item.quantity - 1 }
           : item
       )
     );
@@ -44,10 +45,32 @@ const Checkout = () => {
 
   return (
     <div className="container my-5">
-      <h2 className="mb-4">Your Shopping Cart</h2>
+      <BackToHomeButton />
+      <div className="text-center mb-4">
+        <h2 className="mb-4 w-50 m-auto fst-italic text-black-50">
+          Your Shopping Cart
+        </h2>
+      </div>
       {cart.length === 0 ? (
         <div className="alert alert-warning text-center">
           Your cart is empty.
+          <span className="d-block mt-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="80"
+              height="80"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61l1.38-7.39H6" />
+            </svg>
+          </span>
         </div>
       ) : (
         <div className="row">
@@ -82,7 +105,7 @@ const Checkout = () => {
                   <div className="text-center">
                     <button
                       className="btn btn-sm btn-outline-secondary"
-                      onClick={() => decrementQty(item.id)}         
+                      onClick={() => decrementQty(item.id)}
                     >
                       -
                     </button>

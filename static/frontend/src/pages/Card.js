@@ -4,6 +4,9 @@ import "../components/style/item.css";
 
 const Card = ({ filteredData, AddItem }) => {
   return (
+    <>
+
+     
     <div className="row">
       {filteredData.map((item) => (
         <div className="col-md-4 mb-4" key={item.id}>
@@ -40,6 +43,7 @@ const Card = ({ filteredData, AddItem }) => {
         <p className="text-center text-muted">No items found.</p>
       )}
     </div>
+        </>
   );
 };
 
